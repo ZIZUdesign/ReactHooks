@@ -48,8 +48,8 @@ const Login = (props) => {
     };
   }, []);
 
-  const { isValid: emailIsValid } = emailState;
-  const { isValid: passwordIsValid } = passwordState;
+  // const { isValid: emailIsValid } = emailState;
+  // const { isValid: passwordIsValid } = passwordState;
 
   // useEffect(() => {
   //   const identifier = setTimeout(() => {
@@ -129,6 +129,43 @@ const Login = (props) => {
       </form>
     </Card>
   );
+
+//   // Notes on the react hooks added 
+//   -----------------------------------------------------
+  
+// Handling side Effects with the useEffect() Hook
+// ---------------------------------------------------------
+
+// useEffect(() => {...}, [ dependencies ]);
+
+// about the first argument
+// -------------------------
+// - The first argument function gets excuted whenever the dependencies defined by you have been changed. Not 
+// because the state is somewhere changed.
+// - it is a function that should be excuted AFTER every component evaluation IF the specified dependencies changed
+// - your side effect code goes into this function. 
+
+// about the second argument
+// ---------------------------
+// - dependencies of this effect- the function only runs if the dependencies changed. 
+// - Specify your dependencies of your function here 
+
+
+//  Introducing useReducer() for state management 
+//  ----------------------------------------------------------
+//  - Sometimes you have more complex state- for example if it got multiple states, multiple ways of changing it or 
+//    dependencies to other states. 
+// - useReducer() can be used as a replacement for useState() if you need more powerful state management. 
+
+// const [state, dispatchFn] = useReducer(reducerFn, initialState, initFn); 
+// - state: The state snapshot used in the component re-render/ re-evaluation cycle.
+// -dispatchFn: A function that can be used to dispatch a new action(i.e trigger an update of the state)
+// - reducerFn: (prevState, action) => newState
+//    A function that is triggered automatically once an action is dispatched(via dispatchFn())- it receives the latest state
+//     snapshot and should return the new, updated state. 
+// - initialState: the initial state 
+// - initFn: a function to set th initial state programmatically
+    
 };
 
 export default Login;
