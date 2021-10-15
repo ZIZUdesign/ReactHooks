@@ -47,34 +47,36 @@ const Login = (props) => {
       console.log('EFFECT CLEANUP');
     };
   }, []);
+  
+  //Object destructering and this used as dependencies to useEffect()
+  const { isValid: emailIsValid } = emailState;
+  const { isValid: passwordIsValid } = passwordState;
 
-  // const { isValid: emailIsValid } = emailState;
-  // const { isValid: passwordIsValid } = passwordState;
+  useEffect(() => {
+    const identifier = setTimeout(() => {
+      console.log('Checking form validity!');
+      setFormIsValid(emailIsValid && passwordIsValid);
+    }, 500);
 
-  // useEffect(() => {
-  //   const identifier = setTimeout(() => {
-  //     console.log('Checking form validity!');
-  //     setFormIsValid(emailIsValid && passwordIsValid);
-  //   }, 500);
-
-  //   return () => {
-  //     console.log('CLEANUP');
-  //     clearTimeout(identifier);
-  //   };
-  // }, [emailIsValid, passwordIsValid]);
+    return () => {
+      console.log('CLEANUP');
+      clearTimeout(identifier);
+    };
+    // this will AFTER states( emailStateIsValid and passwordStateIsValid) changed
+  }, [emailIsValid, passwordIsValid]);
 
   const emailChangeHandler = (event) => {
     dispatchEmail({ type: 'USER_INPUT', val: event.target.value });
 
-    setFormIsValid(
-      emailState.isValid && passwordState.isValid
-    );
+    // setFormIsValid(
+    //   emailState.isValid && passwordState.isValid
+    // );
   };
 
   const passwordChangeHandler = (event) => {
     dispatchPassword({ type: 'USER_INPUT', val: event.target.value });
 
-    setFormIsValid(emailState.isValid && passwordState.isValid);
+    // setFormIsValid(emailState.isValid && passwordState.isValid);
   };
 
   const validateEmailHandler = () => {
@@ -134,6 +136,7 @@ const Login = (props) => {
 //   -----------------------------------------------------
   
 // Handling side Effects with the useEffect() Hook
+
 // ---------------------------------------------------------
 
 // useEffect(() => {...}, [ dependencies ]);
